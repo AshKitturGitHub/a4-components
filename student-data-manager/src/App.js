@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import StudentForm from './StudentForm';
 import StudentTable from './StudentTable';
@@ -47,3 +46,4 @@ function App() {
 }
 
 export default App;
+

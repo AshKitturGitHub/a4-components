@@ -2,7 +2,7 @@ const http = require('http'),
       fs   = require('fs'),
       mime = require('mime'),
       dir  = 'public/',
-      port = 3000;
+      port = 3001; // Ensure this port matches your React app's fetch URLs
 
 let studentData = [
   { 'name': 'John Doe', 'age': 20, 'year': 2, 'grade': 85, 'status': calculateStatus(85) },
@@ -11,6 +11,19 @@ let studentData = [
 
 const server = http.createServer(function (request, response) {
   console.log(`Received request: ${request.method} ${request.url}`);
+
+  // **Set CORS headers for all responses**
+  response.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+  response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
+  response.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allowed headers
+
+  if (request.method === 'OPTIONS') {
+    // **Handle preflight OPTIONS request**
+    response.writeHead(204);
+    response.end();
+    return;
+  }
+
   if (request.method === 'GET') {
     handleGet(request, response);
   } else if (request.method === 'POST') {
@@ -60,7 +73,7 @@ const handlePost = function (request, response) {
         studentData = studentData.filter(student => student.name !== data.name);
       }
 
-      response.writeHead(200, 'OK', { 'Content-Type': 'application/json' });
+      response.writeHead(200, { 'Content-Type': 'application/json' });
       response.end(JSON.stringify(studentData));
     }
   });
@@ -69,4 +82,3 @@ const handlePost = function (request, response) {
 function calculateStatus(grade) {
   return grade >= 60 ? 'Passed' : 'Failed';
 }
-
