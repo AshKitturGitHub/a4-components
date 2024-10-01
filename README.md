@@ -4,7 +4,7 @@ Assignment 4 - Components
 
 
 ## Your Web Application Title
-
+Note: To run locally, open two terminals. In the first terminal, run 'server node.js', and in the second terminal, run 'npm start'
 your hosting link e.g. http://a4-charlieroberts.glitch.me
 
 Student Data Manager built using React for the frontend, and Node.js for the backend.
